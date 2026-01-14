@@ -586,16 +586,39 @@
         </div>
     </section>
 
-    <section class="newsletter" id="contact">
-        <div class="container">
-            <h2 data-aos="fade-up">Join the Chasethetics</h2>
-            <p data-aos="fade-up" data-aos-delay="200">Subscribe for exclusive early access to new releases, restocks, and founder insights.</p>
-            <div class="newsletter-form" data-aos="fade-up" data-aos-delay="400">
-                <input type="email" class="newsletter-input" placeholder="Your email address">
-                <button type="submit" class="btn btn-gold">Subscribe</button>
-            </div>
-        </div>
-    </section>
+<section class="newsletter" id="contact">
+    <div class="container">
+        <h2 data-aos="fade-up">Join the Chasethetics</h2>
+        <p data-aos="fade-up" data-aos-delay="200">Subscribe for exclusive early access to new releases, restocks, and founder insights.</p>
+        
+        <!-- Replace your form div with this FORM tag -->
+        <form 
+            action="https://formsubmit.co/chasethetics@gmail.com" 
+            method="POST" 
+            class="newsletter-form" 
+            data-aos="fade-up" 
+            data-aos-delay="400"
+        >
+            <!-- Hidden fields for configuration -->
+            <input type="hidden" name="_subject" value="New Chasethetics Subscriber!">
+            <input type="hidden" name="_next" value="https://yourusername.github.io/chasethetics/thankyou.html">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="text" name="_honey" style="display:none">
+            
+            <!-- Email input (keep your existing class) -->
+            <input 
+                type="email" 
+                name="email" 
+                class="newsletter-input" 
+                placeholder="Your email address" 
+                required
+            >
+            
+            <!-- Submit button (keep your existing class) -->
+            <button type="submit" class="btn btn-gold">Subscribe</button>
+        </form>
+    </div>
+</section>
 
     <footer>
         <div class="container">
@@ -696,4 +719,5 @@
     </script>
 </body>
 </html>
+
 
