@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Philosophy | Chasethetics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --gray: #2a2a2a;
+            --light-gray: #3a3a3a;
+            --white: #ffffff;
+            --accent: #e6e6e6;
+            --gold: #d4af37;
+            --border: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-weight: 300;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            font-weight: 250;
+            letter-spacing: -1.5px;
+        }
+        
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            font-weight: 250;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+        
+        p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            color: #999;
+            line-height: 1.7;
+        }
+        
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 250;
+            text-decoration: none;
+            color: var(--white);
+            letter-spacing: 1px;
+        }
+        
+        .back-btn {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .back-btn:hover {
+            opacity: 1;
+        }
+        
+        /* Hero */
+        .philosophy-hero {
+            padding: 160px 0 80px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .philosophy-hero h1 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .philosophy-hero .subhead {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            color: #aaa;
+        }
+        
+        /* Principles Section */
+        .principles {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .principle-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--dark-gray);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .principle-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+        
+        .principle-number {
+            font-size: 3rem;
+            color: var(--gold);
+            opacity: 0.3;
+            margin-bottom: 1rem;
+            font-weight: 250;
+        }
+        
+        .principle-card h3 {
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+        
+        .principle-card p {
+            color: #888;
+            font-size: 0.95rem;
+        }
+        
+        /* Macronutrients */
+        .macros {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .macros-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .macros-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .macro-card {
+            background: var(--dark-gray);
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            transition: border-color 0.3s;
+        }
+        
+        .macro-card:hover {
+            border-color: var(--gold);
+        }
+        
+        .macro-icon {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+        
+        .macro-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .macro-percentage {
+            font-size: 2rem;
+            color: var(--gold);
+            margin: 1rem 0;
+            font-weight: 250;
+        }
+        
+        .macro-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        /* Food Quality */
+        .food-quality {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .quality-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .quality-content h2 {
+            margin-bottom: 2rem;
+        }
+        
+        .quality-list {
+            list-style: none;
+        }
+        
+        .quality-list li {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            color: #aaa;
+        }
+        
+        .quality-list i {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+        
+        .quality-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background: var(--dark-gray);
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+        
+        .quality-stat {
+            text-align: center;
+        }
+        
+        .quality-stat .number {
+            font-size: 2.5rem;
+            color: var(--gold);
+            font-weight: 250;
+            margin-bottom: 0.5rem;
+        }
+        
+        .quality-stat .label {
+            font-size: 0.9rem;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Approach */
+        .approach {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .approach-item {
+            background: var(--dark-gray);
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+        
+        .approach-item h4 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Meal Planning */
+        .meal-planning {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .planning-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .planning-card {
+            background: var(--dark-gray);
+            padding: 2rem;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .planning-card i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .planning-card h4 {
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+        
+        .planning-card p {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .planning-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s;
+        }
+        
+        .planning-link:hover {
+            gap: 12px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .cta-section h2 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            color: #aaa;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: transparent;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 300;
+            border-radius: 0;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid var(--white);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: var(--white);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+        
+        .btn-gold {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        
+        .btn-gold:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .footer-content {
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.2rem;
+            font-weight: 250;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--white);
+        }
+        
+        .copyright {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        /* Loading Bar */
+        .loading-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--gold);
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .philosophy-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .principles-grid,
+            .macros-grid,
+            .approach-grid,
+            .planning-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quality-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .quality-stats {
+                padding: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-bar" id="loadingBar"></div>
+
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    CHASETHETICS
+                </a>
+                <a href="index.html#plans" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Plans
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="philosophy-hero">
+        <div class="container">
+            <h1 data-aos="fade-up">Nutrition First<br>Approach</h1>
+            <p class="subhead" data-aos="fade-up" data-aos-delay="100">
+                We believe optimal performance begins with what you put in your body. Training without proper fuel yields suboptimal results.
+            </p>
+        </div>
+    </section>
+
+    <section class="principles">
+        <div class="container">
+            <h2 data-aos="fade-up">Core Principles</h2>
+            <div class="principles-grid">
+                <div class="principle-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="principle-number">01</div>
+                    <h3>Individualization</h3>
+                    <p>No two bodies are alike. Every protocol is tailored to your unique metabolism, goals, and lifestyle.</p>
+                </div>
+                <div class="principle-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="principle-number">02</div>
+                    <h3>Sustainability</h3>
+                    <p>Fad diets fail. We build flexible approaches that integrate seamlessly into your daily life.</p>
+                </div>
+                <div class="principle-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="principle-number">03</div>
+                    <h3>Precision</h3>
+                    <p>Every gram matters. Strategic macronutrient timing and portion control for optimal results.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="macros">
+        <div class="container">
+            <div class="macros-content">
+                <h2 data-aos="fade-up">Macronutrient Philosophy</h2>
+                <p data-aos="fade-up" data-aos-delay="100">The foundation of every plan is built on precise macronutrient ratios, adjusted for your specific goal.</p>
+                
+                <div class="macros-grid">
+                    <div class="macro-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="macro-icon">
+                            <i class="fas fa-drumstick-bite"></i>
+                        </div>
+                        <h3>Protein</h3>
+                        <div class="macro-percentage">30-40%</div>
+                        <p>Muscle preservation, satiety, and recovery. Adjusted based on activity level and goals.</p>
+                    </div>
+                    
+                    <div class="macro-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="macro-icon">
+                            <i class="fas fa-bread-slice"></i>
+                        </div>
+                        <h3>Carbohydrates</h3>
+                        <div class="macro-percentage">30-45%</div>
+                        <p>Energy for performance. Timed around training and adjusted for body composition goals.</p>
+                    </div>
+                    
+                    <div class="macro-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="macro-icon">
+                            <i class="fas fa-oil-can"></i>
+                        </div>
+                        <h3>Fats</h3>
+                        <div class="macro-percentage">20-30%</div>
+                        <p>Hormone production and health. Emphasis on quality sources and essential fatty acids.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="food-quality">
+        <div class="container">
+            <div class="quality-grid">
+                <div class="quality-content" data-aos="fade-right">
+                    <h2>Food Quality<br>Matters</h2>
+                    <ul class="quality-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Emphasis on whole, minimally processed foods</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Quality protein sources: grass-fed, pasture-raised when possible</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Complex carbohydrates for sustained energy</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Healthy fats from diverse, nutrient-dense sources</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Seasonal vegetables and fiber-rich foods</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="quality-stats" data-aos="fade-left">
+                    <div class="quality-stat">
+                        <div class="number">90%</div>
+                        <div class="label">Whole Foods</div>
+                    </div>
+                    <div class="quality-stat">
+                        <div class="number">10%</div>
+                        <div class="label">Flexibility</div>
+                    </div>
+                    <div class="quality-stat">
+                        <div class="number">100%</div>
+                        <div class="label">Customized</div>
+                    </div>
+                    <div class="quality-stat">
+                        <div class="number">0</div>
+                        <div class="label">Fad Diets</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="approach">
+        <div class="container">
+            <h2 data-aos="fade-up">Our Approach</h2>
+            <div class="approach-grid">
+                <div class="approach-item" data-aos="fade-up" data-aos-delay="200">
+                    <h4>Assessment</h4>
+                    <p>Detailed analysis of your current diet, goals, metabolism, and lifestyle factors to create your foundation.</p>
+                </div>
+                <div class="approach-item" data-aos="fade-up" data-aos-delay="300">
+                    <h4>Implementation</h4>
+                    <p>Gradual integration of new habits. We don't overhaul overnight—sustainable change takes time.</p>
+                </div>
+                <div class="approach-item" data-aos="fade-up" data-aos-delay="400">
+                    <h4>Optimization</h4>
+                    <p>Continuous refinement based on progress, feedback, and changing needs as your body adapts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="meal-planning">
+        <div class="container">
+            <h2 data-aos="fade-up">Ready to Begin?</h2>
+            <div class="planning-grid">
+                <div class="planning-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-utensils"></i>
+                    <h4>Custom Meal Plan</h4>
+                    <p>Personalized nutrition protocol designed specifically for your goals and preferences.</p>
+                    <a href="custom-meal-plan.html" class="planning-link">
+                        Inquire <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="planning-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-dumbbell"></i>
+                    <h4>Training Protocols</h4>
+                    <p>Integrated training programs designed to complement your nutrition strategy.</p>
+                    <a href="training-protocols.html" class="planning-link">
+                        Inquire <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="planning-card" data-aos="fade-up" data-aos-delay="400">
+                    <i class="fas fa-star"></i>
+                    <h4>Transformation Bundle</h4>
+                    <p>The complete system. Nutrition + training for maximum results.</p>
+                    <a href="transformation-bundle.html" class="planning-link">
+                        Inquire <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Start Your Journey</h2>
+            <p data-aos="fade-up" data-aos-delay="100">Every transformation begins with proper nutrition. Let's build a plan tailored to you.</p>
+            <div class="cta-buttons" data-aos="fade-up" data-aos-delay="200">
+                <a href="custom-meal-plan.html" class="btn btn-gold">Get Started</a>
+                <a href="index.html#contact" class="btn">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="index.html" class="footer-logo">CHASETHETICS</a>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#collection">Collection</a>
+                    <a href="index.html#plans">Plans</a>
+                    <a href="privacy-policy.html">Privacy</a>
+                    <a href="terms-of-service.html">Terms</a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Chasethetics. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Add scroll to top button
+        const scrollTopBtn = document.createElement('a');
+        scrollTopBtn.href = '#';
+        scrollTopBtn.className = 'scroll-top';
+        scrollTopBtn.id = 'scrollTop';
+        scrollTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+        document.body.appendChild(scrollTopBtn);
+
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const winHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset;
+            const trackLength = docHeight - winHeight;
+            const progress = Math.floor((scrollTop / trackLength) * 100);
+            document.getElementById('loadingBar').style.width = progress + '%';
+            
+            // Show/hide scroll to top button
+            if (scrollTop > 300) {
+                document.getElementById('scrollTop').classList.add('visible');
+            } else {
+                document.getElementById('scrollTop').classList.remove('visible');
+            }
+        });
+
+        // Scroll to top functionality
+        document.getElementById('scrollTop').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in on load
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Add scroll-top styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .scroll-top {
+                position: fixed;
+                bottom: 2rem;
+                right: 2rem;
+                width: 40px;
+                height: 40px;
+                background: var(--dark-gray);
+                border: 1px solid var(--border);
+                color: var(--white);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                opacity: 0;
+                transition: all 0.3s;
+                z-index: 100;
+            }
+            
+            .scroll-top.visible {
+                opacity: 0.7;
+            }
+            
+            .scroll-top:hover {
+                opacity: 1;
+                border-color: var(--gold);
+            }
+            
+            @media (max-width: 768px) {
+                .scroll-top {
+                    bottom: 1rem;
+                    right: 1rem;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
