@@ -218,20 +218,20 @@
             color: var(--black);
         }
         
-        /* Programming Section */
-        .programming {
+        /* Plans Section */
+        .plans {
             padding: 8rem 0;
             border-top: 1px solid var(--border);
         }
         
-        .programming-grid {
+        .plans-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-bottom: 4rem;
         }
         
-        .program-card {
+        .plan-card {
             background: var(--dark-gray);
             padding: 2.5rem;
             border: 1px solid var(--border);
@@ -239,30 +239,30 @@
             position: relative;
         }
         
-        .program-card:hover {
+        .plan-card:hover {
             border-color: var(--gold);
             transform: translateY(-5px);
         }
         
-        .program-icon {
+        .plan-icon {
             font-size: 2rem;
             color: var(--gold);
             margin-bottom: 1.5rem;
         }
         
-        .program-card h3 {
+        .plan-card h3 {
             font-size: 1.3rem;
             margin-bottom: 1rem;
             letter-spacing: 0.5px;
         }
         
-        .program-card p {
+        .plan-card p {
             font-size: 0.95rem;
             margin-bottom: 2rem;
             color: #888;
         }
         
-        .program-link {
+        .plan-link {
             color: var(--gold);
             text-decoration: none;
             font-size: 0.85rem;
@@ -274,11 +274,11 @@
             transition: gap 0.3s;
         }
         
-        .program-link:hover {
+        .plan-link:hover {
             gap: 12px;
         }
         
-        .program-badge {
+        .plan-badge {
             position: absolute;
             top: 20px;
             right: 20px;
@@ -290,13 +290,13 @@
             text-transform: uppercase;
         }
         
-        .program-features {
+        .plan-features {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--border);
         }
         
-        .program-feature {
+        .plan-feature {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -305,7 +305,7 @@
             font-size: 0.9rem;
         }
         
-        .program-feature i {
+        .plan-feature i {
             color: var(--gold);
             font-size: 0.8rem;
         }
@@ -629,7 +629,7 @@
                 flex-direction: column;
             }
             
-            .programming-grid {
+            .plans-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -652,7 +652,7 @@
                 </a>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#collection">Collection</a></li>
-                    <li><a href="#programming">Programming</a></li>
+                    <li><a href="#plans">Plans</a></li>
                     <li><a href="#features">Craftsmanship</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -709,86 +709,86 @@
         </div>
     </section>
 
-    <section class="programming" id="programming">
+    <section class="plans" id="plans">
         <div class="container">
-            <h2 data-aos="fade-up">Programming</h2>
-            <p class="section-subtitle" style="text-align: center; max-width: 600px; margin: 0 auto 4rem;" data-aos="fade-up" data-aos-delay="100">
+            <h2 data-aos="fade-up">Plans</h2>
+            <p style="text-align: center; max-width: 600px; margin: 0 auto 4rem;" data-aos="fade-up" data-aos-delay="100">
                 Science-backed protocols designed for the dedicated athlete.
             </p>
             
-            <div class="programming-grid">
-                <div class="program-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="program-icon">
+            <div class="plans-grid">
+                <div class="plan-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="plan-icon">
                         <i class="fas fa-utensils"></i>
                     </div>
                     <h3>Custom Meal Plans</h3>
                     <p>Personalized nutrition protocols tailored to your body composition, goals, and dietary preferences.</p>
-                    <div class="program-features">
-                        <div class="program-feature">
+                    <div class="plan-features">
+                        <div class="plan-feature">
                             <i class="fas fa-check"></i>
                             <span>Macronutrient precision</span>
                         </div>
-                        <div class="program-feature">
+                        <div class="plan-feature">
                             <i class="fas fa-check"></i>
                             <span>Goal-specific optimization</span>
                         </div>
-                        <div class="program-feature">
+                        <div class="plan-feature">
                             <i class="fas fa-check"></i>
                             <span>Flexible food selections</span>
                         </div>
                     </div>
-                    <a href="#" class="program-link">
+                    <a href="custom-meal-plan.html" class="plan-link">
                         Inquire <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
 
-                <div class="program-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="program-icon">
+                <div class="plan-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="plan-icon">
                         <i class="fas fa-dumbbell"></i>
                     </div>
                     <h3>Training Protocols</h3>
                     <p>Periodized workout programs focusing on progressive overload and movement quality.</p>
-                    <div class="program-features">
-                        <div class="program-feature">
+                    <div class="plan-features">
+                        <div class="plan-feature">
                             <i class="fas fa-check"></i>
                             <span>Strength periodization</span>
                         </div>
-                        <div class="program-feature">
+                        <div class="plan-feature">
                             <i class="fas fa-check"></i>
                             <span>Hypertrophy focus</span>
                         </div>
-                        <div class="program-feature">
+                        <div class="plan-feature">
                             <i class="fas fa-check"></i>
                             <span>Form instruction</span>
                         </div>
                     </div>
-                    <a href="#" class="program-link">
+                    <a href="training-protocols.html" class="plan-link">
                         Inquire <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
 
-                <div class="program-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="program-badge">BEST VALUE</div>
-                    <div class="program-icon">
+                <div class="plan-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="plan-badge">BEST VALUE</div>
+                    <div class="plan-icon">
                         <i class="fas fa-star"></i>
                     </div>
                     <h3>Transformation Bundle</h3>
                     <p>The complete system. Nutrition + training protocols for maximum results.</p>
-                    <div class="program-features">
-                        <div class="program-feature">
+                    <div class="plan-features">
+                        <div class="plan-feature">
                             <i class="fas fa-check"></i>
                             <span>Integrated approach</span>
                         </div>
-                        <div class="program-feature">
+                        <div class="plan-feature">
                             <i class="fas fa-check"></i>
                             <span>Progress tracking</span>
                         </div>
-                        <div class="program-feature">
+                        <div class="plan-feature">
                             <i class="fas fa-check"></i>
                             <span>Priority support</span>
                         </div>
                     </div>
-                    <a href="#" class="program-link">
+                    <a href="transformation-bundle.html" class="plan-link">
                         Inquire <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -798,7 +798,7 @@
                 <div class="nutrition-content">
                     <h3>Nutrition<br>First Approach</h3>
                     <p>Every protocol begins with nutrition optimization. We believe training without proper fuel yields suboptimal results. Our programs integrate both.</p>
-                    <a href="#" class="btn btn-gold">Learn More</a>
+                    <a href="nutrition-philosophy.html" class="btn btn-gold">Learn More</a>
                 </div>
                 <div class="nutrition-stats">
                     <div class="stat-item">
