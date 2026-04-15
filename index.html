@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chasethetics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Chasethetics | Surreal 3D Experience</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        
         :root {
             --black: #0a0a0a;
             --dark-gray: #1a1a1a;
@@ -33,6 +35,30 @@
             font-weight: 300;
         }
         
+        /* Canvas 3D Background */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Content Overlay */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            background: radial-gradient(circle at center, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.85) 100%);
+        }
+        
         .container {
             width: 90%;
             max-width: 1200px;
@@ -47,10 +73,14 @@
         }
         
         h1 {
-            font-size: 4.5rem;
+            font-size: 5rem;
             line-height: 1.1;
-            font-weight: 250;
-            letter-spacing: -1.5px;
+            font-weight: 200;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
         h2 {
@@ -67,7 +97,7 @@
         p {
             font-size: 1rem;
             margin-bottom: 1.5rem;
-            color: #999;
+            color: rgba(255,255,255,0.7);
             line-height: 1.7;
         }
         
@@ -77,15 +107,15 @@
             position: fixed;
             width: 100%;
             z-index: 1000;
-            background-color: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(10px);
+            background-color: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(15px);
             transition: all 0.3s ease;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
         header.scrolled {
             padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(10, 10, 10, 0.9);
         }
         
         .navbar {
@@ -96,10 +126,14 @@
         
         .logo {
             font-size: 1.5rem;
-            font-weight: 250;
+            font-weight: 300;
             text-decoration: none;
             color: var(--white);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #fff, var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
         .nav-links {
@@ -113,31 +147,30 @@
             font-size: 0.85rem;
             font-weight: 300;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
+            letter-spacing: 2px;
+            transition: all 0.3s;
             opacity: 0.7;
+            position: relative;
         }
         
         .nav-links a:hover {
             opacity: 1;
-            color: var(--white);
+            color: var(--gold);
         }
         
-        .nav-icons {
-            display: flex;
-            gap: 1.5rem;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s;
         }
         
-        .nav-icons a {
-            color: var(--white);
-            text-decoration: none;
-            font-size: 1rem;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .nav-icons a:hover {
-            opacity: 1;
+        .nav-links a:hover::after {
+            width: 100%;
         }
         
         .menu-toggle {
@@ -152,17 +185,6 @@
             align-items: center;
             position: relative;
             padding-top: 80px;
-            overflow: hidden;
-        }
-        
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
-            z-index: 1;
         }
         
         .hero-content {
@@ -173,14 +195,19 @@
         
         .hero h1 {
             margin-bottom: 1.5rem;
-            font-weight: 250;
+            animation: float 6s ease-in-out infinite;
         }
         
         .hero p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-bottom: 3rem;
             max-width: 500px;
-            color: #aaa;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
         
         /* Buttons */
@@ -190,22 +217,37 @@
             background: transparent;
             color: var(--white);
             text-decoration: none;
-            font-weight: 300;
+            font-weight: 400;
             border-radius: 0;
             transition: all 0.3s;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             border: 1px solid var(--white);
             font-size: 0.85rem;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            transition: left 0.3s;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            left: 0;
         }
         
         .btn:hover {
-            background: var(--white);
             color: var(--black);
-            transform: translateY(-2px);
         }
         
         .btn-gold {
@@ -213,15 +255,18 @@
             color: var(--gold);
         }
         
-        .btn-gold:hover {
+        .btn-gold::before {
             background: var(--gold);
+        }
+        
+        .btn-gold:hover {
             color: var(--black);
         }
         
         /* Plans Section */
         .plans {
             padding: 8rem 0;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
         
         .plans-grid {
@@ -232,20 +277,38 @@
         }
         
         .plan-card {
-            background: var(--dark-gray);
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(10px);
             padding: 2.5rem;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            overflow: hidden;
+        }
+        
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .plan-card:hover::before {
+            left: 100%;
         }
         
         .plan-card:hover {
             border-color: var(--gold);
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
         
         .plan-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--gold);
             margin-bottom: 1.5rem;
         }
@@ -259,7 +322,7 @@
         .plan-card p {
             font-size: 0.95rem;
             margin-bottom: 2rem;
-            color: #888;
+            color: rgba(255,255,255,0.6);
         }
         
         .plan-link {
@@ -267,7 +330,7 @@
             text-decoration: none;
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -275,7 +338,7 @@
         }
         
         .plan-link:hover {
-            gap: 12px;
+            gap: 15px;
         }
         
         .plan-badge {
@@ -293,7 +356,7 @@
         .plan-features {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
         
         .plan-feature {
@@ -301,7 +364,7 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 0.8rem;
-            color: #aaa;
+            color: rgba(255,255,255,0.7);
             font-size: 0.9rem;
         }
         
@@ -312,14 +375,20 @@
         
         /* Nutrition Highlight */
         .nutrition-highlight {
-            background: var(--dark-gray);
+            background: rgba(26, 26, 26, 0.5);
+            backdrop-filter: blur(10px);
             padding: 4rem;
             margin-top: 4rem;
-            border: 1px solid var(--border);
+            border: 1px solid rgba(255,255,255,0.1);
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .nutrition-highlight:hover {
+            border-color: rgba(212,175,55,0.3);
         }
         
         .nutrition-content h3 {
@@ -330,7 +399,7 @@
         
         .nutrition-content p {
             margin-bottom: 2rem;
-            color: #aaa;
+            color: rgba(255,255,255,0.7);
         }
         
         .nutrition-stats {
@@ -345,7 +414,7 @@
         }
         
         .stat-number {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--gold);
             font-weight: 250;
             margin-bottom: 0.5rem;
@@ -353,15 +422,15 @@
         
         .stat-label {
             font-size: 0.85rem;
-            color: #777;
+            color: rgba(255,255,255,0.5);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         
         /* Clothing Collection */
         .collection {
             padding: 8rem 0;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
         
         .collection-grid {
@@ -374,12 +443,17 @@
         .collection-item {
             position: relative;
             overflow: hidden;
+            transition: transform 0.5s;
+        }
+        
+        .collection-item:hover {
+            transform: scale(1.02);
         }
         
         .collection-img {
             width: 100%;
             height: 500px;
-            background: var(--dark-gray);
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
             margin-bottom: 1.5rem;
             position: relative;
             overflow: hidden;
@@ -393,6 +467,11 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            transition: transform 0.5s;
+        }
+        
+        .collection-item:hover .collection-img::before {
+            transform: scale(1.1);
         }
         
         .collection-tag {
@@ -404,6 +483,7 @@
             padding: 5px 15px;
             font-size: 0.8rem;
             letter-spacing: 1px;
+            z-index: 2;
         }
         
         .collection-price {
@@ -415,7 +495,7 @@
         /* Features */
         .features {
             padding: 6rem 0;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
         
         .features-grid {
@@ -426,13 +506,19 @@
         
         .feature-card {
             padding: 2rem 0;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
         
         .feature-number {
             font-size: 0.9rem;
             color: var(--gold);
             margin-bottom: 1rem;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
         
         .feature-card h3 {
@@ -443,7 +529,7 @@
         /* Newsletter */
         .newsletter {
             padding: 6rem 0;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid rgba(255,255,255,0.05);
             text-align: center;
         }
         
@@ -466,22 +552,23 @@
         .newsletter-input {
             flex: 1;
             padding: 14px 20px;
-            background: var(--dark-gray);
-            border: 1px solid var(--border);
+            background: rgba(26, 26, 26, 0.7);
+            border: 1px solid rgba(255,255,255,0.1);
             color: var(--white);
             font-family: inherit;
             font-size: 0.9rem;
+            transition: border-color 0.3s;
         }
         
         .newsletter-input:focus {
             outline: none;
-            border-color: var(--light-gray);
+            border-color: var(--gold);
         }
         
         /* Footer */
         footer {
             padding: 4rem 0;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
         
         .footer-content {
@@ -495,7 +582,7 @@
             font-size: 0.9rem;
             margin-bottom: 1.5rem;
             color: var(--white);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             opacity: 0.7;
         }
@@ -513,14 +600,14 @@
         }
         
         .footer-column ul li a {
-            color: #999;
+            color: rgba(255,255,255,0.5);
             text-decoration: none;
             font-size: 0.9rem;
             transition: color 0.3s;
         }
         
         .footer-column ul li a:hover {
-            color: var(--white);
+            color: var(--gold);
         }
         
         .social-links {
@@ -530,23 +617,23 @@
         }
         
         .social-links a {
-            color: #999;
+            color: rgba(255,255,255,0.5);
             font-size: 1rem;
             transition: color 0.3s;
         }
         
         .social-links a:hover {
-            color: var(--white);
+            color: var(--gold);
         }
         
         .footer-bottom {
             padding-top: 2rem;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid rgba(255,255,255,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.8rem;
-            color: #666;
+            color: rgba(255,255,255,0.4);
         }
         
         .footer-links {
@@ -555,7 +642,7 @@
         }
         
         .footer-links a {
-            color: #666;
+            color: rgba(255,255,255,0.4);
             text-decoration: none;
             transition: color 0.3s;
         }
@@ -570,9 +657,9 @@
             top: 0;
             left: 0;
             width: 0%;
-            height: 1px;
+            height: 2px;
             background: var(--gold);
-            z-index: 9999;
+            z-index: 10000;
             transition: width 0.3s ease;
         }
         
@@ -584,7 +671,8 @@
                 left: -100%;
                 width: 100%;
                 height: calc(100vh - 80px);
-                background-color: var(--black);
+                background-color: rgba(10, 10, 10, 0.95);
+                backdrop-filter: blur(20px);
                 flex-direction: column;
                 align-items: center;
                 justify-content: flex-start;
@@ -643,288 +731,295 @@
 </head>
 <body>
     <div class="loading-bar" id="loadingBar"></div>
-
-    <header id="header">
-        <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">
-                    CHASETHETICS
-                </a>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#collection">Collection</a></li>
-                    <li><a href="#plans">Plans</a></li>
-                    <li><a href="#features">Craftsmanship</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <div class="menu-toggle" id="menuToggle">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="container">
-            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
-                <h1>Elevated Performance Apparel</h1>
-                <p>Crafted for the dedicated. Minimalist design meets uncompromising quality in our inaugural collection of premium fitness essentials.</p>
-                <a href="#collection" class="btn btn-gold" data-aos="fade-up" data-aos-delay="400">View Collection</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="collection" id="collection">
-        <div class="container">
-            <h2 data-aos="fade-up">The Inaugural Collection</h2>
-            <div class="collection-grid">
-                <div class="collection-item" data-aos="fade-up" data-aos-delay="200">
-                    <div class="collection-img">
-                        <div class="collection-tag">ESSENTIALS</div>
-                    </div>
-                    <h3>CHASETHETICS™ — FOUNDATION TEE</h3>
-                    <p>100% cotton. Athletic cut. Black only.</p>
-                    <div class="collection-price">$65</div>
-                </div>
-                <div class="collection-item" data-aos="fade-up" data-aos-delay="400">
-                    <div class="collection-img">
-                        <div class="collection-tag">PERFORMANCE</div>
-                    </div>
-                    <h3>Technical Training Hoodie</h3>
-                    <p>Merino wool blend. Temperature regulation. Reinforced seams.</p>
-                    <div class="collection-price">$145</div>
-                </div>
-                <div class="collection-item" data-aos="fade-up" data-aos-delay="600">
-                    <div class="collection-img">
-                        <div class="collection-tag">ESSENTIALS</div>
-                    </div>
-                    <h3>Movement Short</h3>
-                    <p>Four-way stretch fabric. Hidden pockets. Minimal branding.</p>
-                    <div class="collection-price">$95</div>
-                </div>
-            </div>
-            <div style="text-align: center;" data-aos="fade-up">
-                <a href="#" class="btn">Explore Full Collection</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="plans" id="plans">
-        <div class="container">
-            <h2 data-aos="fade-up">Plans</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto 4rem;" data-aos="fade-up" data-aos-delay="100">
-                Science-backed protocols designed for the dedicated athlete.
-            </p>
-            
-            <div class="plans-grid">
-                <div class="plan-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="plan-icon">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <h3>Custom Meal Plans</h3>
-                    <p>Personalized nutrition protocols tailored to your body composition, goals, and dietary preferences.</p>
-                    <div class="plan-features">
-                        <div class="plan-feature">
-                            <i class="fas fa-check"></i>
-                            <span>Macronutrient precision</span>
-                        </div>
-                        <div class="plan-feature">
-                            <i class="fas fa-check"></i>
-                            <span>Goal-specific optimization</span>
-                        </div>
-                        <div class="plan-feature">
-                            <i class="fas fa-check"></i>
-                            <span>Flexible food selections</span>
-                        </div>
-                    </div>
-                    <a href="https://buy.stripe.com/8x214mayVbco3LUey293y0R" class="plan-link">
-                        Get <i class="fas fa-arrow-right"></i>
+    
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container"></div>
+    
+    <div class="content-wrapper">
+        <header id="header">
+            <div class="container">
+                <nav class="navbar">
+                    <a href="#" class="logo">
+                        CHASETHETICS
                     </a>
-                </div>
+                    <ul class="nav-links" id="navLinks">
+                        <li><a href="#collection">Collection</a></li>
+                        <li><a href="#plans">Plans</a></li>
+                        <li><a href="#features">Craftsmanship</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <div class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </nav>
+            </div>
+        </header>
 
-                <div class="plan-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="plan-icon">
-                        <i class="fas fa-dumbbell"></i>
-                    </div>
-                    <h3>Training Protocols</h3>
-                    <p>Periodized workout programs focusing on progressive overload and movement quality.</p>
-                    <div class="plan-features">
-                        <div class="plan-feature">
-                            <i class="fas fa-check"></i>
-                            <span>Strength periodization</span>
-                        </div>
-                        <div class="plan-feature">
-                            <i class="fas fa-check"></i>
-                            <span>Hypertrophy focus</span>
-                        </div>
-                        <div class="plan-feature">
-                            <i class="fas fa-check"></i>
-                            <span>Form instruction</span>
-                        </div>
-                    </div>
-                    <a href="https://buy.stripe.com/6oU14m5eB0xKbemdtY93y0Q" class="plan-link">
-                        Get <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-
-                <div class="plan-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="plan-badge">BEST VALUE</div>
-                    <div class="plan-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h3>Transformation Bundle</h3>
-                    <p>The complete system. Nutrition + training protocols for maximum results.</p>
-                    <div class="plan-features">
-                        <div class="plan-feature">
-                            <i class="fas fa-check"></i>
-                            <span>Integrated approach</span>
-                        </div>
-                        <div class="plan-feature">
-                            <i class="fas fa-check"></i>
-                            <span>Progress tracking</span>
-                        </div>
-                        <div class="plan-feature">
-                            <i class="fas fa-check"></i>
-                            <span>Priority support</span>
-                        </div>
-                    </div>
-                    <a href="https://buy.stripe.com/6oUfZg4ax2FS5U2ahM93y0S" class="plan-link">
-                        Get <i class="fas fa-arrow-right"></i>
-                    </a>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+                    <h1>Elevated Performance<br>Apparel</h1>
+                    <p>Crafted for the dedicated. Minimalist design meets uncompromising quality in our inaugural collection of premium fitness essentials.</p>
+                    <a href="#collection" class="btn btn-gold" data-aos="fade-up" data-aos-delay="400">View Collection</a>
                 </div>
             </div>
+        </section>
 
-            <div class="nutrition-highlight" data-aos="fade-up" data-aos-delay="200">
-                <div class="nutrition-content">
-                    <h3>Nutrition<br>First Approach</h3>
-                    <p>Every protocol begins with nutrition optimization. We believe training without proper fuel yields suboptimal results. Our programs integrate both.</p>
-                    <a href="nutrition-philosophy.html" class="btn btn-gold">Learn More</a>
+        <section class="collection" id="collection">
+            <div class="container">
+                <h2 data-aos="fade-up">The Inaugural Collection</h2>
+                <div class="collection-grid">
+                    <div class="collection-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="collection-img">
+                            <div class="collection-tag">ESSENTIALS</div>
+                        </div>
+                        <h3>CHASETHETICS™ — FOUNDATION TEE</h3>
+                        <p>100% cotton. Athletic cut. Black only.</p>
+                        <div class="collection-price">$65</div>
+                    </div>
+                    <div class="collection-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="collection-img">
+                            <div class="collection-tag">PERFORMANCE</div>
+                        </div>
+                        <h3>Technical Training Hoodie</h3>
+                        <p>Merino wool blend. Temperature regulation. Reinforced seams.</p>
+                        <div class="collection-price">$145</div>
+                    </div>
+                    <div class="collection-item" data-aos="fade-up" data-aos-delay="600">
+                        <div class="collection-img">
+                            <div class="collection-tag">ESSENTIALS</div>
+                        </div>
+                        <h3>Movement Short</h3>
+                        <p>Four-way stretch fabric. Hidden pockets. Minimal branding.</p>
+                        <div class="collection-price">$95</div>
+                    </div>
                 </div>
-                <div class="nutrition-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Customized</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Support</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">Science</div>
-                        <div class="stat-label">Based</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">Results</div>
-                        <div class="stat-label">Focused</div>
-                    </div>
+                <div style="text-align: center;" data-aos="fade-up">
+                    <a href="#" class="btn">Explore Full Collection</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="features" id="features">
-        <div class="container">
-            <h2 data-aos="fade-up">Craftsmanship & Philosophy</h2>
-            <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-number">01</div>
-                    <h3>Premium Materials</h3>
-                    <p>Sourced European and Japanese fabrics, selected for durability, comfort, and performance under stress.</p>
-                </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="feature-number">02</div>
-                    <h3>Minimalist Design</h3>
-                    <p>Clean lines, subtle branding, and intentional construction designed to complement the physique.</p>
-                </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
-                    <div class="feature-number">03</div>
-                    <h3>Ethical Production</h3>
-                    <p>Limited runs, crafted responsibly in small batches to ensure quality and reduce waste.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="newsletter" id="contact">
-        <div class="container">
-            <h2 data-aos="fade-up">Join the Chasethetics</h2>
-            <p data-aos="fade-up" data-aos-delay="200">Subscribe for exclusive early access to new releases, restocks, and founder insights.</p>
-            
-            <form 
-                action="https://formsubmit.co/chasethetics@gmail.com" 
-                method="POST" 
-                class="newsletter-form" 
-                data-aos="fade-up" 
-                data-aos-delay="400"
-            >
-                <input type="hidden" name="_subject" value="New Chasethetics Subscriber!">
-                <input type="hidden" name="_next" value="https://chasethetics.github.io/Chasethetics/thankyou.html">
-                <input type="hidden" name="_template" value="basic">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="text" name="_honey" style="display:none">
+        <section class="plans" id="plans">
+            <div class="container">
+                <h2 data-aos="fade-up">Plans</h2>
+                <p style="text-align: center; max-width: 600px; margin: 0 auto 4rem;" data-aos="fade-up" data-aos-delay="100">
+                    Science-backed protocols designed for the dedicated athlete.
+                </p>
                 
-                <input 
-                    type="email" 
-                    name="email" 
-                    class="newsletter-input" 
-                    placeholder="Your email address" 
-                    required
+                <div class="plans-grid">
+                    <div class="plan-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="plan-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>Custom Meal Plans</h3>
+                        <p>Personalized nutrition protocols tailored to your body composition, goals, and dietary preferences.</p>
+                        <div class="plan-features">
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Macronutrient precision</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Goal-specific optimization</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Flexible food selections</span>
+                            </div>
+                        </div>
+                        <a href="https://buy.stripe.com/8x214mayVbco3LUey293y0R" class="plan-link">
+                            Get <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="plan-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="plan-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <h3>Training Protocols</h3>
+                        <p>Periodized workout programs focusing on progressive overload and movement quality.</p>
+                        <div class="plan-features">
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Strength periodization</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Hypertrophy focus</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Form instruction</span>
+                            </div>
+                        </div>
+                        <a href="https://buy.stripe.com/6oU14m5eB0xKbemdtY93y0Q" class="plan-link">
+                            Get <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="plan-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="plan-badge">BEST VALUE</div>
+                        <div class="plan-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>Transformation Bundle</h3>
+                        <p>The complete system. Nutrition + training protocols for maximum results.</p>
+                        <div class="plan-features">
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Integrated approach</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Progress tracking</span>
+                            </div>
+                            <div class="plan-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Priority support</span>
+                            </div>
+                        </div>
+                        <a href="https://buy.stripe.com/6oUfZg4ax2FS5U2ahM93y0S" class="plan-link">
+                            Get <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="nutrition-highlight" data-aos="fade-up" data-aos-delay="200">
+                    <div class="nutrition-content">
+                        <h3>Nutrition<br>First Approach</h3>
+                        <p>Every protocol begins with nutrition optimization. We believe training without proper fuel yields suboptimal results. Our programs integrate both.</p>
+                        <a href="nutrition-philosophy.html" class="btn btn-gold">Learn More</a>
+                    </div>
+                    <div class="nutrition-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Customized</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Support</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">Science</div>
+                            <div class="stat-label">Based</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">Results</div>
+                            <div class="stat-label">Focused</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <h2 data-aos="fade-up">Craftsmanship & Philosophy</h2>
+                <div class="features-grid">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-number">01</div>
+                        <h3>Premium Materials</h3>
+                        <p>Sourced European and Japanese fabrics, selected for durability, comfort, and performance under stress.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="feature-number">02</div>
+                        <h3>Minimalist Design</h3>
+                        <p>Clean lines, subtle branding, and intentional construction designed to complement the physique.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                        <div class="feature-number">03</div>
+                        <h3>Ethical Production</h3>
+                        <p>Limited runs, crafted responsibly in small batches to ensure quality and reduce waste.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter" id="contact">
+            <div class="container">
+                <h2 data-aos="fade-up">Join the Chasethetics</h2>
+                <p data-aos="fade-up" data-aos-delay="200">Subscribe for exclusive early access to new releases, restocks, and founder insights.</p>
+                
+                <form 
+                    action="https://formsubmit.co/chasethetics@gmail.com" 
+                    method="POST" 
+                    class="newsletter-form" 
+                    data-aos="fade-up" 
+                    data-aos-delay="400"
                 >
-                
-                <button type="submit" class="btn btn-gold">Subscribe</button>
-            </form>
-        </div>
-    </section>
+                    <input type="hidden" name="_subject" value="New Chasethetics Subscriber!">
+                    <input type="hidden" name="_next" value="https://chasethetics.github.io/Chasethetics/thankyou.html">
+                    <input type="hidden" name="_template" value="basic">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="text" name="_honey" style="display:none">
+                    
+                    <input 
+                        type="email" 
+                        name="email" 
+                        class="newsletter-input" 
+                        placeholder="Your email address" 
+                        required
+                    >
+                    
+                    <button type="submit" class="btn btn-gold">Subscribe</button>
+                </form>
+            </div>
+        </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column" data-aos="fade-up">
-                    <a href="#" class="logo" style="font-size: 1.2rem; margin-bottom: 1.5rem; display: block;">CHASETHETICS</a>
-                    <p>Premium fitness apparel for those dedicated to the craft.</p>
-                    <div class="social-links">
-                        <a href="https://www.tiktok.com/@chasethetics.sg"><i class="fab fa-tiktok"></i></a>
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column" data-aos="fade-up">
+                        <a href="#" class="logo" style="font-size: 1.2rem; margin-bottom: 1.5rem; display: block;">CHASETHETICS</a>
+                        <p>Premium fitness apparel for those dedicated to the craft.</p>
+                        <div class="social-links">
+                            <a href="https://www.tiktok.com/@chasethetics.sg"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Collection</h3>
+                        <ul>
+                            <li><a href="#">Tees & Tops</a></li>
+                            <li><a href="#">Hoodies & Jackets</a></li>
+                            <li><a href="#">Shorts & Pants</a></li>
+                            <li><a href="#">Accessories</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Information</h3>
+                        <ul>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Fit Guide</a></li>
+                            <li><a href="#">Shipping</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="footer-column" data-aos="fade-up" data-aos-delay="100">
-                    <h3>Collection</h3>
-                    <ul>
-                        <li><a href="#">Tees & Tops</a></li>
-                        <li><a href="#">Hoodies & Jackets</a></li>
-                        <li><a href="#">Shorts & Pants</a></li>
-                        <li><a href="#">Accessories</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Information</h3>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Fit Guide</a></li>
-                        <li><a href="#">Shipping</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
+                <div class="footer-bottom">
+                    <div>
+                        <p>&copy; 2026 Chasethetics. All rights reserved.</p>
+                    </div>
+                    <div class="footer-links">
+                        <a href="privacy-policy.html">Privacy Policy</a>
+                        <a href="terms-of-service.html">Terms of Service</a>
+                    </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <div>
-                    <p>&copy; 2026 Chasethetics. All rights reserved.</p>
-                </div>
-                <div class="footer-links">
-                    <a href="privacy-policy.html">Privacy Policy</a>
-                    <a href="terms-of-service.html">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+        // Initialize AOS
         AOS.init({
             duration: 800,
             once: true,
             offset: 100
         });
 
+        // Mobile menu toggle
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
 
@@ -934,6 +1029,7 @@
             menuToggle.querySelector('i').classList.toggle('fa-times');
         });
 
+        // Scroll header and loading bar
         window.addEventListener('scroll', () => {
             const header = document.getElementById('header');
             header.classList.toggle('scrolled', window.scrollY > 50);
@@ -946,6 +1042,7 @@
             document.getElementById('loadingBar').style.width = progress + '%';
         });
 
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -970,7 +1067,239 @@
                 document.body.style.opacity = '1';
             }, 100);
         });
+
+        // ========== THREE.JS 3D BACKGROUND ==========
+        const container = document.getElementById('canvas-container');
+        
+        // Scene
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0a0a);
+        
+        // Camera
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 15);
+        
+        // Renderer
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+        
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0x111111);
+        scene.add(ambientLight);
+        
+        const pointLight1 = new THREE.PointLight(0xd4af37, 1, 30);
+        pointLight1.position.set(3, 3, 5);
+        scene.add(pointLight1);
+        
+        const pointLight2 = new THREE.PointLight(0xffffff, 0.5, 30);
+        pointLight2.position.set(-3, 2, 5);
+        scene.add(pointLight2);
+        
+        const backLight = new THREE.PointLight(0x333333, 0.3);
+        backLight.position.set(0, 0, -5);
+        scene.add(backLight);
+        
+        // Main Torus Knot (Surreal centerpiece)
+        const knotGeometry = new THREE.TorusKnotGeometry(1.5, 0.3, 200, 32, 3, 4);
+        const knotMaterial = new THREE.MeshStandardMaterial({
+            color: 0xd4af37,
+            emissive: 0x331c00,
+            roughness: 0.3,
+            metalness: 0.8,
+            wireframe: false
+        });
+        const torusKnot = new THREE.Mesh(knotGeometry, knotMaterial);
+        scene.add(torusKnot);
+        
+        // Wireframe version inside
+        const wireKnotGeometry = new THREE.TorusKnotGeometry(1.55, 0.32, 200, 32, 3, 4);
+        const wireMaterial = new THREE.MeshBasicMaterial({
+            color: 0xd4af37,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.15
+        });
+        const wireKnot = new THREE.Mesh(wireKnotGeometry, wireMaterial);
+        scene.add(wireKnot);
+        
+        // Floating Spheres (Particles)
+        const sphereGroup = [];
+        const sphereColors = [0xd4af37, 0xff6600, 0xffaa33, 0xffffff];
+        
+        for (let i = 0; i < 60; i++) {
+            const size = 0.05 + Math.random() * 0.1;
+            const sphereGeo = new THREE.SphereGeometry(size, 16, 16);
+            const sphereMat = new THREE.MeshStandardMaterial({
+                color: sphereColors[Math.floor(Math.random() * sphereColors.length)],
+                emissive: 0x221100,
+                roughness: 0.2,
+                metalness: 0.7
+            });
+            const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+            
+            sphere.userData = {
+                radius: 4 + Math.random() * 3,
+                speed: 0.002 + Math.random() * 0.003,
+                angleX: Math.random() * Math.PI * 2,
+                angleY: Math.random() * Math.PI * 2,
+                angleZ: Math.random() * Math.PI * 2
+            };
+            
+            sphere.position.x = Math.cos(sphere.userData.angleX) * sphere.userData.radius;
+            sphere.position.y = Math.sin(sphere.userData.angleY) * sphere.userData.radius;
+            sphere.position.z = Math.sin(sphere.userData.angleZ) * sphere.userData.radius;
+            
+            scene.add(sphere);
+            sphereGroup.push(sphere);
+        }
+        
+        // Floating Rings
+        const ringGeometry = new THREE.TorusGeometry(2.2, 0.05, 64, 200);
+        const ringMaterial = new THREE.MeshStandardMaterial({
+            color: 0xd4af37,
+            emissive: 0x331c00,
+            metalness: 0.9,
+            roughness: 0.2
+        });
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+        scene.add(ring);
+        
+        const ring2Geometry = new THREE.TorusGeometry(2.8, 0.03, 64, 200);
+        const ring2Material = new THREE.MeshStandardMaterial({
+            color: 0xffaa33,
+            emissive: 0x221100,
+            metalness: 0.7,
+            transparent: true,
+            opacity: 0.6
+        });
+        const ring2 = new THREE.Mesh(ring2Geometry, ring2Material);
+        scene.add(ring2);
+        
+        // Floating Particles System
+        const particleCount = 800;
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlePositions = new Float32Array(particleCount * 3);
+        
+        for (let i = 0; i < particleCount; i++) {
+            particlePositions[i * 3] = (Math.random() - 0.5) * 40;
+            particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 25;
+            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 20 - 10;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            color: 0xd4af37,
+            size: 0.05,
+            transparent: true,
+            opacity: 0.4,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particleSystem);
+        
+        // Additional small stars
+        const starCount = 1500;
+        const starsGeometry = new THREE.BufferGeometry();
+        const starPositions = new Float32Array(starCount * 3);
+        
+        for (let i = 0; i < starCount; i++) {
+            starPositions[i * 3] = (Math.random() - 0.5) * 200;
+            starPositions[i * 3 + 1] = (Math.random() - 0.5) * 100;
+            starPositions[i * 3 + 2] = (Math.random() - 0.5) * 80 - 40;
+        }
+        
+        starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+        
+        const starsMaterial = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.03,
+            transparent: true,
+            opacity: 0.3
+        });
+        
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+        
+        // Animation variables
+        let time = 0;
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            time += 0.01;
+            
+            // Rotate main knot
+            torusKnot.rotation.x += 0.005;
+            torusKnot.rotation.y += 0.008;
+            torusKnot.rotation.z += 0.003;
+            
+            wireKnot.rotation.x = torusKnot.rotation.x;
+            wireKnot.rotation.y = torusKnot.rotation.y;
+            wireKnot.rotation.z = torusKnot.rotation.z;
+            
+            // Rotate rings
+            ring.rotation.x += 0.003;
+            ring.rotation.z += 0.005;
+            ring.rotation.y += 0.002;
+            
+            ring2.rotation.x -= 0.002;
+            ring2.rotation.z += 0.004;
+            ring2.rotation.y += 0.003;
+            
+            // Animate spheres in orbits
+            sphereGroup.forEach(sphere => {
+                sphere.userData.angleX += sphere.userData.speed * 0.5;
+                sphere.userData.angleY += sphere.userData.speed;
+                sphere.userData.angleZ += sphere.userData.speed * 0.7;
+                
+                sphere.position.x = Math.cos(sphere.userData.angleX) * sphere.userData.radius;
+                sphere.position.y = Math.sin(sphere.userData.angleY) * sphere.userData.radius;
+                sphere.position.z = Math.sin(sphere.userData.angleZ) * sphere.userData.radius;
+            });
+            
+            // Pulse lights
+            const intensity = 0.8 + Math.sin(time * 2) * 0.3;
+            pointLight1.intensity = intensity;
+            pointLight2.intensity = 0.4 + Math.sin(time * 1.5) * 0.2;
+            
+            // Rotate particle system slowly
+            particleSystem.rotation.y += 0.0005;
+            particleSystem.rotation.x += 0.0003;
+            
+            stars.rotation.y += 0.0002;
+            stars.rotation.x += 0.0001;
+            
+            // Camera slight movement for surreal effect
+            camera.position.x += (0 - camera.position.x) * 0.02;
+            camera.position.y += (0 - camera.position.y) * 0.02;
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', onWindowResize, false);
+        
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        // Mouse interaction for subtle camera movement
+        document.addEventListener('mousemove', (event) => {
+            const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            const mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+            
+            camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.02;
+            camera.position.y += (-mouseY * 0.3 - camera.position.y) * 0.02;
+        });
     </script>
 </body>
 </html>
-
