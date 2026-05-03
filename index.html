@@ -242,144 +242,163 @@
             color: var(--pure-black);
         }
         
-        /* ========== CAROUSEL SECTION ========== */
-        .carousel-section {
-            padding: 6rem 0;
+        /* Product Showcase Section */
+        .product-showcase {
+            padding: 8rem 0;
             border-top: 1px solid var(--border-light);
             border-bottom: 1px solid var(--border-light);
         }
         
-        .carousel-container {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            overflow: hidden;
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 4rem;
+            margin-top: 2rem;
         }
         
-        .carousel {
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        .product-card {
+            background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(5px);
+            transition: all 0.4s ease;
         }
         
-        .carousel-slide {
-            min-width: 100%;
-            position: relative;
+        .product-card:hover {
+            transform: translateY(-8px);
         }
         
-        .carousel-img {
+        /* Main Product Image */
+        .product-main-image {
             width: 100%;
-            height: 500px;
+            height: 450px;
             background: var(--off-black);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
-        .carousel-img img {
+        .product-main-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.8;
-            transition: opacity 0.3s;
+            transition: transform 0.5s ease;
         }
         
-        .carousel-img:hover img {
-            opacity: 1;
+        .product-card:hover .product-main-image img {
+            transform: scale(1.03);
         }
         
-        .carousel-tag {
+        .product-tag {
             position: absolute;
             top: 20px;
             left: 20px;
             background: var(--white);
             color: var(--pure-black);
             padding: 5px 15px;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
             z-index: 2;
         }
         
-        .carousel-price {
+        .product-price {
             position: absolute;
             bottom: 20px;
             right: 20px;
             background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
             padding: 8px 20px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--white);
             letter-spacing: 1px;
             z-index: 2;
         }
         
-        .carousel-title {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 1.5rem;
-            letter-spacing: 2px;
+        /* Thumbnail Gallery for Multiple Angles */
+        .product-thumbnails {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            padding: 0.5rem;
         }
         
-        .carousel-desc {
-            text-align: center;
+        .thumb {
+            width: 80px;
+            height: 80px;
+            background: var(--dark-charcoal);
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .thumb:hover {
+            border-color: var(--white);
+            transform: translateY(-3px);
+        }
+        
+        .thumb:hover img {
+            transform: scale(1.1);
+        }
+        
+        .thumb.active {
+            border-color: var(--white);
+            border-width: 2px;
+        }
+        
+        .product-info {
+            padding: 1.5rem 0 0;
+            text-align: left;
+        }
+        
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-description {
             font-size: 0.9rem;
             color: rgba(255,255,255,0.5);
-            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
         }
         
-        /* Carousel Navigation */
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: var(--white);
-            cursor: pointer;
+        .product-actions {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            z-index: 10;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
         }
         
-        .carousel-btn:hover {
-            background: var(--white);
-            color: var(--pure-black);
-            border-color: var(--white);
+        .shop-link {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s;
         }
         
-        .carousel-prev {
-            left: 20px;
+        .shop-link:hover {
+            gap: 12px;
         }
         
-        .carousel-next {
-            right: 20px;
-        }
-        
-        /* Carousel Dots */
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .dot.active {
-            background: var(--white);
-            width: 30px;
-            border-radius: 5px;
+        .stock-status {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1px;
         }
         
         /* Plans Section */
@@ -782,13 +801,18 @@
                 gap: 2rem;
             }
             
-            .carousel-btn {
-                width: 40px;
-                height: 40px;
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
             }
             
-            .carousel-img {
+            .product-main-image {
                 height: 350px;
+            }
+            
+            .thumb {
+                width: 60px;
+                height: 60px;
             }
         }
     </style>
@@ -807,7 +831,7 @@
                         CHASETHETICS
                     </a>
                     <ul class="nav-links" id="navLinks">
-                        <li><a href="#carousel">Collection</a></li>
+                        <li><a href="#products">Collection</a></li>
                         <li><a href="#plans">Plans</a></li>
                         <li><a href="#features">Craftsmanship</a></li>
                         <li><a href="#contact">Contact</a></li>
@@ -824,78 +848,111 @@
                 <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
                     <h1>Elevated Performance<br>Apparel</h1>
                     <p>Crafted for the dedicated. Minimalist design meets uncompromising quality in our inaugural collection of premium fitness essentials.</p>
-                    <a href="#carousel" class="btn" data-aos="fade-up" data-aos-delay="400">View Collection</a>
+                    <a href="#products" class="btn" data-aos="fade-up" data-aos-delay="400">View Collection</a>
                 </div>
             </div>
         </section>
 
-        <!-- CAROUSEL SECTION -->
-        <section class="carousel-section" id="carousel">
+        <!-- PRODUCT SHOWCASE SECTION -->
+        <section class="product-showcase" id="products">
             <div class="container">
                 <h2 data-aos="fade-up">The Inaugural Collection</h2>
-                <div class="carousel-container" data-aos="fade-up" data-aos-delay="100">
-                    <div class="carousel" id="carousel">
-                        <!-- Slide 1 -->
-                        <div class="carousel-slide">
-                            <div class="carousel-img">
-                                <div class="carousel-tag">ESSENTIALS</div>
-                                <div class="carousel-price">$90</div>
-                                <img src="chasethetics-ethereal-front.png" alt="Ethereal Front">
-                                <div style="width:100%; height:100%; background: linear-gradient(135deg, #111, #222); display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas fa-tshirt" style="font-size: 4rem; color: rgba(255,255,255,0.3);"></i>
-                                </div>
-                            </div>
-                            <div class="carousel-title">Ethereal</div>
-                            <div class="carousel-desc">Limited release. Refined form. Pure expression.</div>
+                <div class="products-grid">
+                    
+                    <!-- Product 1 - Ethereal Tee with Multiple Angles -->
+                    <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="product-main-image" id="mainImage1">
+                            <div class="product-tag">ESSENTIALS</div>
+                            <div class="product-price">$65</div>
+                            <img id="mainPic1" src="chasethetics-ethereal-front.png" alt="Ethereal Tee Front">
                         </div>
-                        <!-- Slide 2 -->
-                        <div class="carousel-slide">
-                            <div class="carousel-img">
-                                <div class="carousel-tag">PERFORMANCE</div>
-                                <div class="carousel-price">$145</div>
-                                <div style="width:100%; height:100%; background: linear-gradient(135deg, #1a1a1a, #2a2a2a); display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas fa-hoodie" style="font-size: 4rem; color: rgba(255,255,255,0.3);"></i>
-                                </div>
+                        <div class="product-thumbnails">
+                            <div class="thumb active" onclick="changeImage('mainPic1', 'chasethetics-ethereal-front.png', this)">
+                                <img src="chasethetics-ethereal-front.png" alt="Front View">
                             </div>
-                            <div class="carousel-title">Technical Hoodie</div>
-                            <div class="carousel-desc">Merino wool blend. Temperature regulation.</div>
+                            <div class="thumb" onclick="changeImage('mainPic1', 'chasethetics-ethereal-back.png', this)">
+                                <img src="chasethetics-ethereal-back.png" alt="Back View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic1', 'chasethetics-ethereal-side.png', this)">
+                                <img src="chasethetics-ethereal-side.png" alt="Side View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic1', 'chasethetics-ethereal-detail.png', this)">
+                                <img src="chasethetics-ethereal-detail.png" alt="Detail View">
+                            </div>
                         </div>
-                        <!-- Slide 3 -->
-                        <div class="carousel-slide">
-                            <div class="carousel-img">
-                                <div class="carousel-tag">ESSENTIALS</div>
-                                <div class="carousel-price">$95</div>
-                                <div style="width:100%; height:100%; background: linear-gradient(135deg, #0a0a0a, #1a1a1a); display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas fa-running" style="font-size: 4rem; color: rgba(255,255,255,0.3);"></i>
-                                </div>
+                        <div class="product-info">
+                            <div class="product-title">Ethereal Tee</div>
+                            <div class="product-description">Japanese cotton jersey. Relaxed athletic cut. Minimalist branding. Breathable, durable, and refined.</div>
+                            <div class="product-actions">
+                                <a href="#" class="shop-link">Shop Now <i class="fas fa-arrow-right"></i></a>
+                                <div class="stock-status">LIMITED RELEASE</div>
                             </div>
-                            <div class="carousel-title">Movement Short</div>
-                            <div class="carousel-desc">Four-way stretch. Hidden pockets.</div>
-                        </div>
-                        <!-- Slide 4 -->
-                        <div class="carousel-slide">
-                            <div class="carousel-img">
-                                <div class="carousel-tag">LIMITED</div>
-                                <div class="carousel-price">$195</div>
-                                <div style="width:100%; height:100%; background: linear-gradient(135deg, #222, #1a1a1a); display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas fa-jacket" style="font-size: 4rem; color: rgba(255,255,255,0.3);"></i>
-                                </div>
-                            </div>
-                            <div class="carousel-title">Bomber Jacket</div>
-                            <div class="carousel-desc">Nylon ripstop. Water resistant.</div>
                         </div>
                     </div>
-                    
-                    <button class="carousel-btn carousel-prev" id="prevBtn">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="carousel-btn carousel-next" id="nextBtn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    
-                    <div class="carousel-dots" id="carouselDots"></div>
+
+                    <!-- Product 2 - Technical Hoodie with Multiple Angles -->
+                    <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="product-main-image" id="mainImage2">
+                            <div class="product-tag">PERFORMANCE</div>
+                            <div class="product-price">$145</div>
+                            <img id="mainPic2" src="chasethetics-hoodie-front.png" alt="Technical Hoodie Front">
+                        </div>
+                        <div class="product-thumbnails">
+                            <div class="thumb active" onclick="changeImage('mainPic2', 'chasethetics-hoodie-front.png', this)">
+                                <img src="chasethetics-hoodie-front.png" alt="Front View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic2', 'chasethetics-hoodie-back.png', this)">
+                                <img src="chasethetics-hoodie-back.png" alt="Back View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic2', 'chasethetics-hoodie-side.png', this)">
+                                <img src="chasethetics-hoodie-side.png" alt="Side View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic2', 'chasethetics-hoodie-detail.png', this)">
+                                <img src="chasethetics-hoodie-detail.png" alt="Detail View">
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Technical Hoodie</div>
+                            <div class="product-description">Merino wool blend. Temperature regulation. Reinforced seams. Engineered for performance and comfort.</div>
+                            <div class="product-actions">
+                                <a href="#" class="shop-link">Shop Now <i class="fas fa-arrow-right"></i></a>
+                                <div class="stock-status">PRE-ORDER</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 - Movement Short with Multiple Angles -->
+                    <div class="product-card" data-aos="fade-up" data-aos-delay="600">
+                        <div class="product-main-image" id="mainImage3">
+                            <div class="product-tag">ESSENTIALS</div>
+                            <div class="product-price">$95</div>
+                            <img id="mainPic3" src="chasethetics-shorts-front.png" alt="Movement Short Front">
+                        </div>
+                        <div class="product-thumbnails">
+                            <div class="thumb active" onclick="changeImage('mainPic3', 'chasethetics-shorts-front.png', this)">
+                                <img src="chasethetics-shorts-front.png" alt="Front View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic3', 'chasethetics-shorts-back.png', this)">
+                                <img src="chasethetics-shorts-back.png" alt="Back View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic3', 'chasethetics-shorts-side.png', this)">
+                                <img src="chasethetics-shorts-side.png" alt="Side View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic3', 'chasethetics-shorts-detail.png', this)">
+                                <img src="chasethetics-shorts-detail.png" alt="Detail View">
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Movement Short</div>
+                            <div class="product-description">Four-way stretch fabric. Hidden zippered pockets. Moisture-wicking. Built for unrestricted movement.</div>
+                            <div class="product-actions">
+                                <a href="#" class="shop-link">Shop Now <i class="fas fa-arrow-right"></i></a>
+                                <div class="stock-status">IN STOCK</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div style="text-align: center; margin-top: 3rem;" data-aos="fade-up">
+                <div style="text-align: center; margin-top: 4rem;" data-aos="fade-up">
                     <a href="#" class="btn">Explore Full Collection</a>
                 </div>
             </div>
@@ -1169,6 +1226,24 @@
             }, 100);
         });
 
+        // Function to change product images (multiple angles)
+        window.changeImage = function(imageId, imagePath, thumbElement) {
+            const mainImage = document.getElementById(imageId);
+            if (mainImage) {
+                mainImage.src = imagePath;
+            }
+            
+            // Remove active class from all thumbs in this product
+            const container = thumbElement.parentElement;
+            const allThumbs = container.querySelectorAll('.thumb');
+            allThumbs.forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            
+            // Add active class to clicked thumb
+            thumbElement.classList.add('active');
+        };
+
         // ========== THREE.JS 3D BACKGROUND WITH ANIMATED LOGO ==========
         const container = document.getElementById('canvas-container');
         
@@ -1208,10 +1283,8 @@
         scene.add(rimLight);
         
         // ========== 3D ANIMATED LOGO ==========
-        // Create a group for the logo
         const logoGroup = new THREE.Group();
         
-        // Create text geometry for "C"
         const letterGeometry = new THREE.BoxGeometry(0.8, 1.2, 0.2);
         const letterMaterial = new THREE.MeshStandardMaterial({
             color: 0xffffff,
@@ -1220,7 +1293,6 @@
             emissive: 0x111111
         });
         
-        // Create multiple cubes to form "C" shape
         const cTop = new THREE.Mesh(letterGeometry, letterMaterial);
         cTop.position.set(0, 0.8, 0);
         logoGroup.add(cTop);
@@ -1239,7 +1311,6 @@
         cMid.scale.set(0.6, 0.5, 1);
         logoGroup.add(cMid);
         
-        // Surrounding torus knot
         const knotGeo = new THREE.TorusKnotGeometry(1.4, 0.08, 200, 32, 2, 3);
         const knotMat = new THREE.MeshStandardMaterial({
             color: 0xffffff,
@@ -1250,7 +1321,6 @@
         const knot = new THREE.Mesh(knotGeo, knotMat);
         logoGroup.add(knot);
         
-        // Small orbiting spheres
         const orbitingSpheres = [];
         for (let i = 0; i < 8; i++) {
             const sphereGeo = new THREE.SphereGeometry(0.08, 16, 16);
@@ -1266,7 +1336,6 @@
         
         scene.add(logoGroup);
         
-        // Floating particles around the logo
         const particleCount = 400;
         const particleGeo = new THREE.BufferGeometry();
         const particlePositions = new Float32Array(particleCount * 3);
@@ -1290,7 +1359,6 @@
         const particles = new THREE.Points(particleGeo, particleMat);
         scene.add(particles);
         
-        // Background stars
         const starCount = 1200;
         const starGeo = new THREE.BufferGeometry();
         const starPositions = new Float32Array(starCount * 3);
@@ -1313,29 +1381,23 @@
         const stars = new THREE.Points(starGeo, starMat);
         scene.add(stars);
         
-        // Animation variables
         let time = 0;
         
-        // Animation loop
         function animate() {
             requestAnimationFrame(animate);
             time += 0.008;
             
-            // Rotate logo group
             logoGroup.rotation.x = Math.sin(time * 0.5) * 0.2;
             logoGroup.rotation.y = Math.sin(time * 0.3) * 0.3;
             logoGroup.rotation.z = Math.sin(time * 0.4) * 0.1;
             
-            // Pulse scale effect
             const scale = 1 + Math.sin(time * 2) * 0.03;
             logoGroup.scale.set(scale, scale, scale);
             
-            // Rotate knot
             knot.rotation.x += 0.01;
             knot.rotation.y += 0.015;
             knot.rotation.z += 0.008;
             
-            // Animate orbiting spheres
             orbitingSpheres.forEach((sphere, index) => {
                 const angle = time * 1.5 + (index * Math.PI * 2 / orbitingSpheres.length);
                 const radius = 1.8;
@@ -1344,18 +1406,15 @@
                 sphere.position.y = Math.sin(angle * 1.5) * 0.5;
             });
             
-            // Rotate stars and particles
             stars.rotation.y += 0.0005;
             stars.rotation.x += 0.0003;
             particles.rotation.y += 0.002;
             particles.rotation.x += 0.001;
             
-            // Pulse lights
             const intensity = 0.7 + Math.sin(time * 3) * 0.2;
             mainLight.intensity = intensity;
             rimLight.intensity = 0.3 + Math.sin(time * 2) * 0.1;
             
-            // Camera movement
             camera.position.x += (0 - camera.position.x) * 0.03;
             camera.position.y += (0 - camera.position.y) * 0.03;
             
@@ -1364,7 +1423,6 @@
         
         animate();
         
-        // Handle window resize
         window.addEventListener('resize', onWindowResize, false);
         
         function onWindowResize() {
@@ -1373,96 +1431,12 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
         
-        // Mouse interaction
         document.addEventListener('mousemove', (event) => {
             const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
             const mouseY = (event.clientY / window.innerHeight) * 2 - 1;
             
             camera.position.x += (mouseX * 0.8 - camera.position.x) * 0.02;
             camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.02;
-        });
-        
-        // ========== CAROUSEL FUNCTIONALITY ==========
-        const carousel = document.getElementById('carousel');
-        const slides = document.querySelectorAll('.carousel-slide');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const dotsContainer = document.getElementById('carouselDots');
-        
-        let currentIndex = 0;
-        const totalSlides = slides.length;
-        let autoPlayInterval;
-        
-        // Create dots
-        function createDots() {
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < totalSlides; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (i === currentIndex) dot.classList.add('active');
-                dot.addEventListener('click', () => goToSlide(i));
-                dotsContainer.appendChild(dot);
-            }
-        }
-        
-        // Update carousel position
-        function updateCarousel() {
-            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-            document.querySelectorAll('.dot').forEach((dot, i) => {
-                if (i === currentIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-        
-        // Go to specific slide
-        function goToSlide(index) {
-            currentIndex = index;
-            updateCarousel();
-            resetAutoPlay();
-        }
-        
-        // Next slide
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            updateCarousel();
-            resetAutoPlay();
-        }
-        
-        // Previous slide
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-            updateCarousel();
-            resetAutoPlay();
-        }
-        
-        // Reset autoplay timer
-        function resetAutoPlay() {
-            if (autoPlayInterval) {
-                clearInterval(autoPlayInterval);
-            }
-            autoPlayInterval = setInterval(() => {
-                nextSlide();
-            }, 5000); // Auto change every 5 seconds
-        }
-        
-        // Event listeners
-        prevBtn.addEventListener('click', prevSlide);
-        nextBtn.addEventListener('click', nextSlide);
-        
-        // Initialize
-        createDots();
-        resetAutoPlay();
-        
-        // Pause autoplay on hover
-        const carouselContainer = document.querySelector('.carousel-container');
-        carouselContainer.addEventListener('mouseenter', () => {
-            if (autoPlayInterval) clearInterval(autoPlayInterval);
-        });
-        carouselContainer.addEventListener('mouseleave', () => {
-            resetAutoPlay();
         });
     </script>
 </body>
