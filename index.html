@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Chasethetics</title>
+    <title>Chasethetics | Y2K</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-        
         :root {
             --pure-black: #000000;
             --off-black: #050505;
@@ -16,7 +15,14 @@
             --white: #ffffff;
             --off-white: #f5f5f5;
             --silver: #cccccc;
+            --chrome-1: #e8e8e8;
+            --chrome-2: #a8a8a8;
+            --chrome-3: #6b6b6b;
+            --holo-1: #c0c0ff;
+            --holo-2: #ffc0e8;
+            --holo-3: #c0ffe8;
             --border-light: rgba(255,255,255,0.08);
+            --glow: rgba(255,255,255,0.4);
         }
         
         * {
@@ -32,6 +38,26 @@
             line-height: 1.6;
             overflow-x: hidden;
             font-weight: 300;
+        }
+        
+        /* Y2K Scanline Overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255,255,255,0.015) 0px,
+                rgba(255,255,255,0.015) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.5;
         }
         
         /* Canvas 3D Background */
@@ -66,29 +92,72 @@
         }
         
         h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', 'Inter', sans-serif;
             font-weight: 300;
-            letter-spacing: -0.5px;
+            letter-spacing: 1px;
             margin-bottom: 1rem;
         }
         
+        /* Y2K Chrome Text Effect */
         h1 {
             font-size: 5rem;
             line-height: 1.1;
-            font-weight: 200;
-            letter-spacing: -2px;
-            color: var(--white);
+            font-weight: 700;
+            letter-spacing: 4px;
+            background: linear-gradient(
+                180deg,
+                #ffffff 0%,
+                #e8e8e8 20%,
+                #ffffff 30%,
+                #a8a8a8 50%,
+                #6b6b6b 70%,
+                #ffffff 90%,
+                #cccccc 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+            position: relative;
+        }
+        
+        h1::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(192,192,255,0.4) 60%, transparent 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            pointer-events: none;
         }
         
         h2 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 2rem;
-            font-weight: 250;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
             color: var(--white);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--white), transparent);
         }
         
         h3 {
-            font-size: 1.5rem;
-            font-weight: 300;
+            font-size: 1.3rem;
+            font-weight: 400;
+            letter-spacing: 1px;
         }
         
         p {
@@ -96,6 +165,7 @@
             margin-bottom: 1.5rem;
             color: rgba(255,255,255,0.6);
             line-height: 1.7;
+            font-family: 'Inter', sans-serif;
         }
         
         /* Header */
@@ -113,6 +183,7 @@
         header.scrolled {
             padding: 1rem 0;
             background-color: rgba(0, 0, 0, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
         }
         
         .navbar {
@@ -122,11 +193,21 @@
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: 300;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
             text-decoration: none;
-            color: var(--white);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #ffffff 0%, #a8a8a8 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .logo:hover {
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
         }
         
         .nav-links {
@@ -135,12 +216,13 @@
         }
         
         .nav-links a {
+            font-family: 'Orbitron', sans-serif;
             text-decoration: none;
             color: var(--white);
-            font-size: 0.85rem;
-            font-weight: 300;
+            font-size: 0.75rem;
+            font-weight: 400;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             transition: all 0.3s;
             opacity: 0.7;
             position: relative;
@@ -148,6 +230,7 @@
         
         .nav-links a:hover {
             opacity: 1;
+            text-shadow: 0 0 15px rgba(255,255,255,0.6);
         }
         
         .nav-links a::after {
@@ -157,7 +240,7 @@
             left: 0;
             width: 0;
             height: 1px;
-            background: var(--white);
+            background: linear-gradient(90deg, var(--white), var(--holo-1));
             transition: width 0.3s;
         }
         
@@ -191,10 +274,11 @@
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 3rem;
             max-width: 500px;
             color: rgba(255,255,255,0.5);
+            letter-spacing: 0.5px;
         }
         
         @keyframes float {
@@ -202,24 +286,28 @@
             50% { transform: translateY(-20px); }
         }
         
-        /* Buttons */
+        /* Y2K Chrome Buttons */
         .btn {
             display: inline-block;
             padding: 14px 40px;
-            background: transparent;
+            background: linear-gradient(180deg, #1a1a1a, #000000);
             color: var(--white);
             text-decoration: none;
-            font-weight: 400;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
             border-radius: 0;
             transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 3px;
-            border: 1px solid var(--white);
-            font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.75rem;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             z-index: 1;
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.2),
+                0 0 20px rgba(255,255,255,0.05);
         }
         
         .btn::before {
@@ -229,17 +317,21 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: var(--white);
-            transition: left 0.3s;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
             z-index: -1;
         }
         
         .btn:hover::before {
-            left: 0;
+            left: 100%;
         }
         
         .btn:hover {
-            color: var(--pure-black);
+            border-color: var(--white);
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.3),
+                0 0 30px rgba(255,255,255,0.3);
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
         }
         
         /* Product Showcase Section */
@@ -260,10 +352,38 @@
             background: rgba(5, 5, 5, 0.6);
             backdrop-filter: blur(5px);
             transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid var(--border-light);
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(135deg, 
+                rgba(192,192,255,0.1), 
+                transparent 30%, 
+                transparent 70%, 
+                rgba(255,192,232,0.1));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+        
+        .product-card:hover::before {
+            opacity: 1;
         }
         
         .product-card:hover {
             transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.25);
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.5),
+                0 0 40px rgba(192,192,255,0.1);
         }
         
         /* Main Product Image */
@@ -287,47 +407,56 @@
             transform: scale(1.03);
         }
         
+        /* Y2K Product Tag */
         .product-tag {
             position: absolute;
             top: 20px;
             left: 20px;
-            background: var(--white);
+            background: linear-gradient(135deg, #ffffff, #e8e8e8, #ffffff);
             color: var(--pure-black);
             padding: 5px 15px;
-            font-size: 0.75rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
             letter-spacing: 2px;
             z-index: 2;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
         
         .product-price {
             position: absolute;
             bottom: 20px;
             right: 20px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             backdrop-filter: blur(5px);
             padding: 8px 20px;
-            font-size: 1.1rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
             color: var(--white);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             z-index: 2;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
-        /* Thumbnail Gallery for Multiple Angles */
+        /* Thumbnail Gallery */
         .product-thumbnails {
             display: flex;
             gap: 0.8rem;
             margin-top: 1rem;
             padding: 0.5rem;
+            flex-wrap: wrap;
         }
         
         .thumb {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: var(--dark-charcoal);
             cursor: pointer;
             overflow: hidden;
             border: 1px solid var(--border-light);
             transition: all 0.3s ease;
+            position: relative;
         }
         
         .thumb img {
@@ -338,8 +467,9 @@
         }
         
         .thumb:hover {
-            border-color: var(--white);
+            border-color: rgba(255,255,255,0.5);
             transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(255,255,255,0.15);
         }
         
         .thumb:hover img {
@@ -349,25 +479,28 @@
         .thumb.active {
             border-color: var(--white);
             border-width: 2px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
         
         .product-info {
-            padding: 1.5rem 0 0;
+            padding: 1.5rem 1.5rem 1.5rem;
             text-align: left;
         }
         
         .product-title {
-            font-size: 1.3rem;
-            font-weight: 300;
-            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
             margin-bottom: 0.5rem;
+            text-transform: uppercase;
         }
         
         .product-description {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: rgba(255,255,255,0.5);
             margin-bottom: 1rem;
-            line-height: 1.5;
+            line-height: 1.6;
         }
         
         .product-actions {
@@ -382,23 +515,29 @@
         .shop-link {
             color: var(--white);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: gap 0.3s;
+            transition: all 0.3s;
         }
         
         .shop-link:hover {
             gap: 12px;
+            text-shadow: 0 0 15px rgba(255,255,255,0.8);
         }
         
         .stock-status {
-            font-size: 0.7rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.6rem;
             color: rgba(255,255,255,0.4);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            padding: 4px 8px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         /* Plans Section */
@@ -431,7 +570,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(192,192,255,0.08), transparent);
             transition: left 0.5s;
         }
         
@@ -440,25 +579,29 @@
         }
         
         .plan-card:hover {
-            border-color: var(--white);
+            border-color: rgba(255,255,255,0.3);
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.5),
+                0 0 40px rgba(192,192,255,0.1);
         }
         
         .plan-icon {
             font-size: 2.5rem;
             color: var(--white);
             margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
         
         .plan-card h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 1rem;
-            letter-spacing: 0.5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
         
         .plan-card p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-bottom: 2rem;
             color: rgba(255,255,255,0.5);
         }
@@ -466,29 +609,35 @@
         .plan-link {
             color: var(--white);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: gap 0.3s;
+            transition: all 0.3s;
         }
         
         .plan-link:hover {
             gap: 15px;
+            text-shadow: 0 0 15px rgba(255,255,255,0.8);
         }
         
         .plan-badge {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: var(--white);
+            background: linear-gradient(135deg, #ffffff, #e8e8e8, #ffffff);
             color: var(--pure-black);
             padding: 4px 12px;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
         
         .plan-features {
@@ -503,12 +652,12 @@
             gap: 10px;
             margin-bottom: 0.8rem;
             color: rgba(255,255,255,0.5);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .plan-feature i {
             color: var(--white);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
         
         /* Nutrition Highlight */
@@ -523,16 +672,34 @@
             gap: 4rem;
             align-items: center;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nutrition-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(192,192,255,0.03), 
+                transparent 50%, 
+                rgba(255,192,232,0.03));
+            pointer-events: none;
         }
         
         .nutrition-highlight:hover {
             border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 0 60px rgba(192,192,255,0.1);
         }
         
         .nutrition-content h3 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 1rem;
             line-height: 1.2;
+            letter-spacing: 2px;
         }
         
         .nutrition-content p {
@@ -552,14 +719,17 @@
         }
         
         .stat-number {
-            font-size: 2.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
             color: var(--white);
-            font-weight: 250;
+            font-weight: 700;
             margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
         
         .stat-label {
-            font-size: 0.85rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
             color: rgba(255,255,255,0.4);
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -588,16 +758,24 @@
         }
         
         .feature-number {
-            font-size: 0.9rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
             color: var(--white);
             margin-bottom: 1rem;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             opacity: 0.5;
         }
         
         .feature-card h3 {
             margin-bottom: 1rem;
             color: var(--white);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .feature-card p {
+            font-size: 0.9rem;
         }
         
         /* Newsletter */
@@ -629,14 +807,15 @@
             background: rgba(10, 10, 10, 0.7);
             border: 1px solid var(--border-light);
             color: var(--white);
-            font-family: inherit;
+            font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
         }
         
         .newsletter-input:focus {
             outline: none;
-            border-color: var(--white);
+            border-color: rgba(255,255,255,0.4);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
         }
         
         /* Footer */
@@ -653,7 +832,8 @@
         }
         
         .footer-column h3 {
-            font-size: 0.9rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
             margin-bottom: 1.5rem;
             color: var(--white);
             letter-spacing: 3px;
@@ -662,7 +842,7 @@
         }
         
         .footer-column p {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .footer-column ul {
@@ -676,12 +856,13 @@
         .footer-column ul li a {
             color: rgba(255,255,255,0.4);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: color 0.3s;
         }
         
         .footer-column ul li a:hover {
             color: var(--white);
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
         
         .social-links {
@@ -693,11 +874,13 @@
         .social-links a {
             color: rgba(255,255,255,0.4);
             font-size: 1rem;
-            transition: color 0.3s;
+            transition: all 0.3s;
         }
         
         .social-links a:hover {
             color: var(--white);
+            text-shadow: 0 0 15px rgba(255,255,255,0.8);
+            transform: translateY(-3px);
         }
         
         .footer-bottom {
@@ -706,7 +889,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: rgba(255,255,255,0.3);
         }
         
@@ -732,9 +915,10 @@
             left: 0;
             width: 0%;
             height: 2px;
-            background: var(--white);
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
             z-index: 10000;
             transition: width 0.3s ease;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
         }
         
         /* Mobile */
@@ -765,11 +949,13 @@
             }
             
             h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+                letter-spacing: 2px;
             }
             
             h2 {
-                font-size: 2rem;
+                font-size: 1.5rem;
+                letter-spacing: 2px;
             }
             
             .hero-content {
@@ -811,8 +997,8 @@
             }
             
             .thumb {
-                width: 60px;
-                height: 60px;
+                width: 55px;
+                height: 55px;
             }
         }
     </style>
@@ -846,8 +1032,9 @@
         <section class="hero" id="home">
             <div class="container">
                 <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
-                    <h1>Elevated Performance<br>Apparel</h1>
-                    <p>Crafted for the dedicated. Minimalist design meets uncompromising quality in our inaugural collection of premium fitness essentials.</p>
+                    <h1 data-text="ELEVATED">ELEVATED</h1>
+                    <h1 data-text="APPAREL">APPAREL</h1>
+                    <p>Crafted for the dedicated. Futuristic design meets uncompromising quality in our inaugural collection of premium fitness essentials.</p>
                     <a href="#products" class="btn" data-aos="fade-up" data-aos-delay="400">View Collection</a>
                 </div>
             </div>
@@ -859,9 +1046,9 @@
                 <h2 data-aos="fade-up">The Inaugural Collection</h2>
                 <div class="products-grid">
                     
-                    <!-- Product 1 - Ethereal Tee with Multiple Angles -->
+                    <!-- Product 1 - Ethereal Tee -->
                     <div class="product-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="product-main-image" id="mainImage1">
+                        <div class="product-main-image">
                             <div class="product-tag">PRE-ORDER</div>
                             <div class="product-price">$90</div>
                             <img id="mainPic1" src="chasethetics-ethereal-front.png" alt="Ethereal Tee Front">
@@ -879,14 +1066,14 @@
                             <div class="product-description">Relaxed athletic cut. Minimalist branding. Breathable, durable, and refined.</div>
                             <div class="product-actions">
                                 <a href="#" class="shop-link">Shop Now <i class="fas fa-arrow-right"></i></a>
-                                <div class="stock-status">LIMITED RELEASE</div>
+                                <div class="stock-status">LIMITED</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Product 2 - Technical Hoodie with Multiple Angles -->
+                    <!-- Product 2 - Technical Hoodie -->
                     <div class="product-card" data-aos="fade-up" data-aos-delay="400">
-                        <div class="product-main-image" id="mainImage2">
+                        <div class="product-main-image">
                             <div class="product-tag">PERFORMANCE</div>
                             <div class="product-price">$145</div>
                             <img id="mainPic2" src="chasethetics-hoodie-front.png" alt="Technical Hoodie Front">
@@ -904,14 +1091,14 @@
                             <div class="product-description">Merino wool blend. Temperature regulation. Reinforced seams. Engineered for performance and comfort.</div>
                             <div class="product-actions">
                                 <a href="#" class="shop-link">Shop Now <i class="fas fa-arrow-right"></i></a>
-                                <div class="stock-status">COMING SOON</div>
+                                <div class="stock-status">SOON</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Product 3 - Movement Short with Multiple Angles -->
+                    <!-- Product 3 - Movement Short -->
                     <div class="product-card" data-aos="fade-up" data-aos-delay="600">
-                        <div class="product-main-image" id="mainImage3">
+                        <div class="product-main-image">
                             <div class="product-tag">ESSENTIALS</div>
                             <div class="product-price">$95</div>
                             <img id="mainPic3" src="chasethetics-shorts-front.png" alt="Movement Short Front">
@@ -929,7 +1116,38 @@
                             <div class="product-description">Four-way stretch fabric. Hidden zippered pockets. Moisture-wicking. Built for unrestricted movement.</div>
                             <div class="product-actions">
                                 <a href="#" class="shop-link">Shop Now <i class="fas fa-arrow-right"></i></a>
-                                <div class="stock-status">COMING SOON</div>
+                                <div class="stock-status">SOON</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 - NEW: Chasethetics Logo Tee (4 angles) -->
+                    <div class="product-card" data-aos="fade-up" data-aos-delay="800">
+                        <div class="product-main-image">
+                            <div class="product-tag">SIGNATURE</div>
+                            <div class="product-price">$110</div>
+                            <img id="mainPic4" src="chasethetics-logo-front.png" alt="Chasethetics Logo Tee Front">
+                        </div>
+                        <div class="product-thumbnails">
+                            <div class="thumb active" onclick="changeImage('mainPic4', 'chasethetics-logo-front.png', this)">
+                                <img src="chasethetics-logo-front.png" alt="Front View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic4', 'chasethetics-logo-front-side.png', this)">
+                                <img src="chasethetics-logo-front-side.png" alt="Front Side View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic4', 'chasethetics-logo-back.png', this)">
+                                <img src="chasethetics-logo-back.png" alt="Back View">
+                            </div>
+                            <div class="thumb" onclick="changeImage('mainPic4', 'chasethetics-logo-back-side.png', this)">
+                                <img src="chasethetics-logo-back-side.png" alt="Back Side View">
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Signature Logo Tee</div>
+                            <div class="product-description">The definitive Chasethetics piece. Full branding on front and back. Premium heavyweight cotton. Available in multiple angles to showcase the complete design.</div>
+                            <div class="product-actions">
+                                <a href="#" class="shop-link">Shop Now <i class="fas fa-arrow-right"></i></a>
+                                <div class="stock-status">PRE-ORDER</div>
                             </div>
                         </div>
                     </div>
@@ -1027,7 +1245,7 @@
 
                 <div class="nutrition-highlight" data-aos="fade-up" data-aos-delay="200">
                     <div class="nutrition-content">
-                        <h3>Nutrition<br>First Approach</h3>
+                        <h3>NUTRITION<br>FIRST</h3>
                         <p>Every protocol begins with nutrition optimization. We believe training without proper fuel yields suboptimal results. Our programs integrate both.</p>
                         <a href="nutrition-philosophy.html" class="btn">Learn More</a>
                     </div>
@@ -1041,11 +1259,11 @@
                             <div class="stat-label">Support</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">Science</div>
+                            <div class="stat-number">SCIENCE</div>
                             <div class="stat-label">Based</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">Results</div>
+                            <div class="stat-number">RESULTS</div>
                             <div class="stat-label">Focused</div>
                         </div>
                     </div>
@@ -1055,7 +1273,7 @@
 
         <section class="features" id="features">
             <div class="container">
-                <h2 data-aos="fade-up">Craftsmanship & Philosophy</h2>
+                <h2 data-aos="fade-up">Craftsmanship</h2>
                 <div class="features-grid">
                     <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
                         <div class="feature-number">01</div>
@@ -1111,7 +1329,7 @@
             <div class="container">
                 <div class="footer-content">
                     <div class="footer-column" data-aos="fade-up">
-                        <a href="#" class="logo" style="font-size: 1.2rem; margin-bottom: 1.5rem; display: block;">CHASETHETICS</a>
+                        <a href="#" class="logo" style="font-size: 1rem; margin-bottom: 1.5rem; display: block;">CHASETHETICS</a>
                         <p>Premium fitness apparel for those dedicated to the craft.</p>
                         <div class="social-links">
                             <a href="https://www.tiktok.com/@chasethetics.sg"><i class="fab fa-tiktok"></i></a>
@@ -1212,33 +1430,32 @@
         window.changeImage = function(imageId, imagePath, thumbElement) {
             const mainImage = document.getElementById(imageId);
             if (mainImage) {
-                mainImage.src = imagePath;
+                mainImage.style.opacity = '0';
+                setTimeout(() => {
+                    mainImage.src = imagePath;
+                    mainImage.style.opacity = '1';
+                }, 150);
             }
             
-            // Remove active class from all thumbs in this product
             const container = thumbElement.parentElement;
             const allThumbs = container.querySelectorAll('.thumb');
             allThumbs.forEach(thumb => {
                 thumb.classList.remove('active');
             });
             
-            // Add active class to clicked thumb
             thumbElement.classList.add('active');
         };
 
-        // ========== THREE.JS 3D BACKGROUND WITH ANIMATED LOGO ==========
+        // ========== THREE.JS 3D BACKGROUND ==========
         const container = document.getElementById('canvas-container');
         
-        // Scene
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x000000);
         scene.fog = new THREE.FogExp2(0x000000, 0.008);
         
-        // Camera
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 0, 18);
         
-        // Renderer
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
@@ -1264,14 +1481,23 @@
         rimLight.position.set(1, 2, -2);
         scene.add(rimLight);
         
+        // Y2K Holographic point lights
+        const holoLight1 = new THREE.PointLight(0xc0c0ff, 0.3);
+        holoLight1.position.set(-3, 2, 2);
+        scene.add(holoLight1);
+        
+        const holoLight2 = new THREE.PointLight(0xffc0e8, 0.3);
+        holoLight2.position.set(3, -2, 2);
+        scene.add(holoLight2);
+        
         // ========== 3D ANIMATED LOGO ==========
         const logoGroup = new THREE.Group();
         
         const letterGeometry = new THREE.BoxGeometry(0.8, 1.2, 0.2);
         const letterMaterial = new THREE.MeshStandardMaterial({
             color: 0xffffff,
-            metalness: 0.85,
-            roughness: 0.25,
+            metalness: 0.95,
+            roughness: 0.15,
             emissive: 0x111111
         });
         
@@ -1297,7 +1523,7 @@
         const knotMat = new THREE.MeshStandardMaterial({
             color: 0xffffff,
             metalness: 0.9,
-            roughness: 0.2,
+            roughness: 0.15,
             emissive: 0x111111
         });
         const knot = new THREE.Mesh(knotGeo, knotMat);
@@ -1318,6 +1544,7 @@
         
         scene.add(logoGroup);
         
+        // Particles
         const particleCount = 400;
         const particleGeo = new THREE.BufferGeometry();
         const particlePositions = new Float32Array(particleCount * 3);
@@ -1341,6 +1568,7 @@
         const particles = new THREE.Points(particleGeo, particleMat);
         scene.add(particles);
         
+        // Stars
         const starCount = 1200;
         const starGeo = new THREE.BufferGeometry();
         const starPositions = new Float32Array(starCount * 3);
@@ -1396,6 +1624,9 @@
             const intensity = 0.7 + Math.sin(time * 3) * 0.2;
             mainLight.intensity = intensity;
             rimLight.intensity = 0.3 + Math.sin(time * 2) * 0.1;
+            
+            holoLight1.intensity = 0.2 + Math.sin(time * 1.5) * 0.15;
+            holoLight2.intensity = 0.2 + Math.cos(time * 1.8) * 0.15;
             
             camera.position.x += (0 - camera.position.x) * 0.03;
             camera.position.y += (0 - camera.position.y) * 0.03;
